@@ -24,12 +24,20 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 
 public class MapsActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
+
+    private static final LatLng KALISZ = new LatLng(51.770, 18.100);
+    private static final LatLng KRAKOW = new LatLng(50.060, 19.959);
+    private static final LatLng CZESTOCHOWA = new LatLng(50.810, 19.129);
+    private static final LatLng LODZ = new LatLng(51.770, 19.459);
 
     private SupportMapFragment mapFragment;
     private GoogleMap map;
@@ -37,6 +45,9 @@ public class MapsActivity extends AppCompatActivity implements
     private LocationRequest mLocationRequest;
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
+
+    //private ArrayList<MyMarker> mMyMarkersArray = new ArrayList<MyMarker>();
+    //private HashMap<Marker, MyMarker> mMarkersHashMap;
 
     /*
      * Define a request code to send to Google Play services This code is
@@ -62,6 +73,8 @@ public class MapsActivity extends AppCompatActivity implements
         }
 
     }
+
+
 
     protected void loadMap(GoogleMap googleMap) {
         map = googleMap;
@@ -277,7 +290,19 @@ public class MapsActivity extends AppCompatActivity implements
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.item2:
+                map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                return true;
+            case R.id.item3:
+                map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                return true;
+            case R.id.item5:
                 finishAffinity();
+                return true;
+            case R.id.item4:
+                map.addMarker(new MarkerOptions().position(KALISZ).icon(BitmapDescriptorFactory.fromResource(R.drawable.currentlocation_icon)));
+                map.addMarker(new MarkerOptions().position(LODZ).icon(BitmapDescriptorFactory.fromResource(R.drawable.currentlocation_icon)));
+                map.addMarker(new MarkerOptions().position(KRAKOW).icon(BitmapDescriptorFactory.fromResource(R.drawable.currentlocation_icon)));
+                map.addMarker(new MarkerOptions().position(CZESTOCHOWA).icon(BitmapDescriptorFactory.fromResource(R.drawable.currentlocation_icon)));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
